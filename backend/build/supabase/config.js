@@ -1,5 +1,12 @@
 "use strict";
-// import { createClient } from '@supabase/supabase-js';
-// const SUPABASE_URL = 'https://your-supabase-url.supabase.co';
-// const SUPABASE_KEY = 'your-supabase-api-key';
-// export const supabase = createClient("https://pcfrazerlvwsfhswmqbi.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZnJhemVybHZ3c2Zoc3dtcWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA3MjE5OTksImV4cCI6MjA0NjI5Nzk5OX0.YS-Y_Srx_5AWfdK4Kqi33S1CC-Yv-TCL6dDAh8i4CHg");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.supabase = void 0;
+const supabase_js_1 = require("@supabase/supabase-js");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+exports.supabase = (0, supabase_js_1.createClient)(SUPABASE_URL, SUPABASE_KEY);
