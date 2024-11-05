@@ -29,15 +29,17 @@ const sellerSchema = new Schema({
     },
     phone: {
         type: String,
-        unique : true
+        unique : true,
+        required: true
     },
     businessName: {
         type: String,
-        unique : true
+        unique : true,
+        required: true
     },
     businessRegistrationID: {
         type: String,
-       
+        required: true,
         unique : true
     },
     address: {

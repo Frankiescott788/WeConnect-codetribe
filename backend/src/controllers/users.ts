@@ -4,6 +4,7 @@ import Client from "../models/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { v4 } from "uuid";
 
 interface SellerRegisterBody {
   firstname: string;
@@ -14,13 +15,7 @@ interface SellerRegisterBody {
   phone: string;
   businessName: string;
   businessRegistrationID: string;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    country: string;
-  };
+  address: string,
   termsAccepted: boolean;
 }
 
@@ -55,9 +50,9 @@ const seller_signup = async (req: Request, res: any): Promise<void> => {
       password,
       user_type : "seller",
       phone,
-      businessName : "",
-      businessRegistrationID : "",
-      address : "",
+      businessName,
+      businessRegistrationID : v4(),
+      address ,
       termsAccepted : false,
     });
 
@@ -87,7 +82,7 @@ const seller_login = async (req: Request, res: any): Promise<void> => {
     if (find_user) {
       const verify = await bcrypt.compare(password, find_user?.password);
       if (verify) {
-        const token = jwt.sign({ id: find_user?._id }, "frankie", {
+        const token = jwt.sign({ user_id: find_user?._id }, "frankie", {
           expiresIn: "7d",
         });
         res.cookie("auth_token", token, {
@@ -100,12 +95,12 @@ const seller_login = async (req: Request, res: any): Promise<void> => {
           data: find_user,
         });
       } else {
-        res.status(400).json({
+        return res.status(400).json({
           message: "wrong credentials",
         });
       }
     } else {
-      res.status(404).json({
+      return res.status(404).json({
         message: "no such email in our system",
       });
     }
@@ -183,15 +178,15 @@ const get_current_seller = async (req : any, res : any) : Promise<void> => {
     const { id } = req;
     
     if(!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(400).json({err : "Invalid object id"})
+      return res.status(400).json({err : "Invalid object id"})
     } 
 
-    const current_user = await sellerModel.findOne({ _id : id }).select('-password')
+    const current_user = await sellerModel.findById({ _id : id }).select('-password')
 
     if(!current_user) {
-      res.status(404).json({err : "No such user in our system"})
+      return res.status(404).json({err : "No such user in our system"})
     } else {
-      res.status(200).json({
+      return res.status(200).json({
         message : "user authenticated",
         data : current_user
       })

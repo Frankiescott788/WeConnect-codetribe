@@ -8,7 +8,7 @@ export default function Dashboard() {
   const { currentUser } = useContext(Authcontext);
 
   return (
-    <div className="bg-[#f9fafbca] h-screen">
+    <div className="bg-[#f9fafb] h-screen">
       <aside className="fixed top-0 bottom-0 left-0 bg-white border-e px-2">
         <div className="col-span-3 w-[15rem]">
           <div className="logo pt-4">

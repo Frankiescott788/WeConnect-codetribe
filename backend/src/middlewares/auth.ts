@@ -9,28 +9,20 @@ async function Authenticate(
 ): Promise<void> {
   try {
     const { auth_token } = req.cookies;
-    if (auth_token) {
-      jwt.verify(
-        auth_token,
-        "frankie",
-        async (err: any, decoded: any): Promise<void> => {
-          if (err) console.log(err);
-          const current_user = await sellerModel.findOne({
-            _id: decoded?.user_id,
-          });
-          if (!current_user) {
-            res.status(404).json({ err: "User not found" });
-          } else {
-            req.id = current_user?._id;
-            next();
-          }
-        }
-      );
-    } else {
-      res.status(400).json({
-        message: "unauthorised",
-      });
+
+    if (!auth_token) {
+      return res.status(401).json({ message: "No token provided" });
     }
+
+    jwt.verify(auth_token, "frankie", (err: any, decoded: any) => {
+      if (err) {
+        return res
+          .status(403)
+          .json({ message: "Failed to authenticate token" });
+      }
+      req.id = decoded.user_id;
+      next();
+    });
   } catch (error) {
     res.status(500).json({ err: "internal server error" });
   }

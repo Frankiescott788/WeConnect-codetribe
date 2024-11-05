@@ -4,13 +4,16 @@ import App from "./App.tsx";
 import "./index.css";
 import { NextUIProvider } from "@nextui-org/react";
 import Authprovider from "./context/authentication.tsx";
+import SignupGlobalsession from "./context/signupGlobal.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Authprovider>
-      <NextUIProvider>
-        <App />
-      </NextUIProvider>
+      <SignupGlobalsession>
+        <NextUIProvider>
+          <App />
+        </NextUIProvider>
+      </SignupGlobalsession>
     </Authprovider>
   </React.StrictMode>
 );

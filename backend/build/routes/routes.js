@@ -11,7 +11,7 @@ const auth_1 = __importDefault(require("../middlewares/auth"));
 const routes = (0, express_1.Router)();
 const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({ storage });
-routes.post('/api/seller/newproduct', auth_1.default, upload.single('images'), products_1.create_product);
+routes.post('/api/newproduct', auth_1.default, upload.single('images'), products_1.create_product);
 routes.get('/api/products', auth_1.default, products_1.get_products);
 routes.get('/api/:businessid/products', auth_1.default, products_1.seller_products);
 routes.get('/api/product/:id', auth_1.default, products_1.get_product);

@@ -41,14 +41,17 @@ const sellerSchema = new mongoose_1.Schema({
     },
     phone: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     businessName: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     businessRegistrationID: {
         type: String,
+        required: true,
         unique: true
     },
     address: {

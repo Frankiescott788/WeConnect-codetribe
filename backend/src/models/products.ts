@@ -32,7 +32,7 @@ const productSchema = new Schema<Product>({
         required : true
     },
     images : {
-        type : [String],
+        type : String,
         required : true
     },
     sellerId : {

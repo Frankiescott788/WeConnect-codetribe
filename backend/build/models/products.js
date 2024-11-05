@@ -23,7 +23,7 @@ const productSchema = new mongoose_1.Schema({
         required: true
     },
     images: {
-        type: [String],
+        type: String,
         required: true
     },
     sellerId: {

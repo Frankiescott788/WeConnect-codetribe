@@ -22,6 +22,7 @@ const create_product = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const { name, description, price, quantity, category, sellerId } = req.body;
         const photos = req.file;
+        const { id } = req;
         const storageRef = (0, storage_1.ref)(config_1.storage, `images/product_${(0, uuid_1.v4)()}`);
         yield (0, storage_1.uploadBytes)(storageRef, photos.buffer);
         const urlData = yield (0, storage_1.getDownloadURL)(storageRef);
@@ -31,7 +32,7 @@ const create_product = (req, res) => __awaiter(void 0, void 0, void 0, function*
             price,
             quantity,
             category,
-            sellerId,
+            sellerId: id,
             images: urlData,
         });
         res.status(201).json({
@@ -85,17 +86,17 @@ const get_product = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { id } = req.params;
         if (!mongoose_1.default.Types.ObjectId.isValid(req.params.id)) {
-            res.status(404).json({ err: "Product not found" });
+            return res.status(404).json({ err: "Product not found" });
         }
         const find_product = yield products_1.default.findById(id);
         if (find_product) {
-            res.status(200).json({
+            return res.status(200).json({
                 message: "Product retrieved successfully",
                 data: find_product,
             });
         }
         else {
-            res.status(404).json({ err: "Product not found" });
+            return res.status(404).json({ err: "Product not found" });
         }
     }
     catch (error) {

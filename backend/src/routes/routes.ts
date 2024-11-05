@@ -9,7 +9,7 @@ const routes = Router();
 const storage = multer.memoryStorage();
 const upload = multer({storage});
 
-routes.post('/api/seller/newproduct', Authenticate , upload.single('images'), create_product);
+routes.post('/api/newproduct', Authenticate, upload.single('images'), create_product);
 routes.get('/api/products', Authenticate ,get_products);
 routes.get('/api/:businessid/products',Authenticate ,seller_products);
 routes.get('/api/product/:id', Authenticate ,get_product);
@@ -20,7 +20,7 @@ routes.delete('/api/product/:id',Authenticate ,delete_product);
 
 routes.post("/api/seller/signup", seller_signup);
 routes.post('/api/seller/signin', seller_login);
-routes.get('/api/seller/current', Authenticate,get_current_seller);
+routes.get('/api/seller/current', Authenticate, get_current_seller);
 
 routes.post('/api/client/signup', create_client);
 routes.post('/api/client/signin', client_login);

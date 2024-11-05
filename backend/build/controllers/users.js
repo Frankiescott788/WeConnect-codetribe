@@ -18,6 +18,7 @@ const client_1 = __importDefault(require("../models/client"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const uuid_1 = require("uuid");
 const seller_signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstname, lastname, email, password, user_type, phone, businessName, businessRegistrationID, address, termsAccepted, } = req.body;
@@ -28,9 +29,9 @@ const seller_signup = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             password,
             user_type: "seller",
             phone,
-            businessName: "",
-            businessRegistrationID: "",
-            address: "",
+            businessName,
+            businessRegistrationID: (0, uuid_1.v4)(),
+            address,
             termsAccepted: false,
         });
         const token = jsonwebtoken_1.default.sign({ user_id: newSeller._id }, "frankie", {
@@ -58,7 +59,7 @@ const seller_login = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (find_user) {
             const verify = yield bcrypt_1.default.compare(password, find_user === null || find_user === void 0 ? void 0 : find_user.password);
             if (verify) {
-                const token = jsonwebtoken_1.default.sign({ id: find_user === null || find_user === void 0 ? void 0 : find_user._id }, "frankie", {
+                const token = jsonwebtoken_1.default.sign({ user_id: find_user === null || find_user === void 0 ? void 0 : find_user._id }, "frankie", {
                     expiresIn: "7d",
                 });
                 res.cookie("auth_token", token, {
@@ -72,13 +73,13 @@ const seller_login = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 });
             }
             else {
-                res.status(400).json({
+                return res.status(400).json({
                     message: "wrong credentials",
                 });
             }
         }
         else {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "no such email in our system",
             });
         }
@@ -158,14 +159,14 @@ const get_current_seller = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const { id } = req;
         if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
-            res.status(400).json({ err: "Invalid object id" });
+            return res.status(400).json({ err: "Invalid object id" });
         }
-        const current_user = yield seller_1.default.findOne({ _id: id }).select('-password');
+        const current_user = yield seller_1.default.findById({ _id: id }).select('-password');
         if (!current_user) {
-            res.status(404).json({ err: "No such user in our system" });
+            return res.status(404).json({ err: "No such user in our system" });
         }
         else {
-            res.status(200).json({
+            return res.status(200).json({
                 message: "user authenticated",
                 data: current_user
             });
