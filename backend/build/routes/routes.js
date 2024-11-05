@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const users_1 = require("../controllers/users");
+const multer_1 = __importDefault(require("multer"));
+const products_1 = require("../controllers/products");
+const auth_1 = __importDefault(require("../middlewares/auth"));
+const routes = (0, express_1.Router)();
+const storage = multer_1.default.memoryStorage();
+const upload = (0, multer_1.default)({ storage });
+routes.post('/api/seller/newproduct', auth_1.default, upload.single('images'), products_1.create_product);
+routes.get('/api/products', auth_1.default, products_1.get_products);
+routes.get('/api/:businessid/products', auth_1.default, products_1.seller_products);
+routes.get('/api/product/:id', auth_1.default, products_1.get_product);
+routes.patch('/api/product/:id', auth_1.default, products_1.update_product);
+routes.delete('/api/product/:id', auth_1.default, products_1.delete_product);
+routes.post("/api/seller/signup", users_1.seller_signup);
+routes.post('/api/seller/signin', users_1.seller_login);
+routes.get('/api/seller/current', auth_1.default, users_1.get_current_seller);
+routes.post('/api/client/signup', users_1.create_client);
+routes.post('/api/client/signin', users_1.client_login);
+exports.default = routes;

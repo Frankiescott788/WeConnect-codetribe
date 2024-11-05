@@ -1,0 +1,26 @@
+{
+    "name": "Seller Name",
+    "email": "seller@example.com",
+    "password": "securepassword123",
+    "phone": "123-456-7890",
+    "businessName": "Seller Business Name",
+    "businessRegistrationNumber": "BRN123456",
+    "address": {
+      "street": "123 Seller St",
+      "city": "Polokwane",
+      "state": "Limpopo",
+      "postalCode": "0700",
+      "country": "South Africa"
+    },
+    "products": [
+      {
+        "productId": "product12345",
+        "name": "Product Name",
+        "category": "Electronics",
+        "price": 100.00
+      }
+    ],
+    "termsAccepted": true
+}
+
+

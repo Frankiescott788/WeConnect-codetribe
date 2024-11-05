@@ -1,0 +1,30 @@
+{
+    "orderId": "order12345",           
+    "customer": {
+      "customerId": "customer67890",    
+      "name": "John Doe",               
+      "email": "john.doe@example.com",   
+      "phone": "123-456-7890",           
+      "address": {
+        "street": "123 Main St",         
+        "city": "Polokwane",              
+        "state": "Limpopo",               
+        "postalCode": "0700",             
+        "country": "South Africa"        
+      }
+    },
+    "products": [
+      {
+        "productId": "product54321",      
+        "name": "Product Name",             
+        "quantity": 2,                     
+        "price": 50.00                     
+      }
+    ],
+    "totalAmount": 100.00,                
+    "paymentStatus": "Paid",              
+    "orderStatus": "Processing",          
+    "orderDate": "2024-11-04T12:00:00Z",  
+    "deliveryDate": "2024-11-06T12:00:00Z" 
+  }
+  

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node", "express"] // Remove "mongoose" temporarily
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
+}
